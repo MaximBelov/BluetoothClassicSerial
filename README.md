@@ -62,6 +62,23 @@ All variables can be modified after installation by updating the values in `pack
 
 -   `IOS_INIT_ON_LOAD`: [**iOS**] Prevents the Bluetooth plugin from being initialised until first access to the `bluetoothClassicSerial` window object. This allows an application to warn the user before the Bluetooth access permission is requested.
 
+## Android permission
+
+To include the default set of permissions the plugin installs on Android SDK v33+, add the following snippet in your `config.xml` file, in the `<platform name="android">` section:
+
+```xml
+    <config-file target="AndroidManifest.xml" parent="/manifest">
+        <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" android:maxSdkVersion="28" />
+        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" android:maxSdkVersion="34" />
+        <uses-permission android:name="android.permission.BLUETOOTH_SCAN" android:usesPermissionFlags="neverForLocation" />
+        <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+        <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="33" />
+        <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="33" />
+    </config-file>
+```
+
+For the best understanding about which permissions are needed for which combinations of target SDK version & OS version, see [Android Bluetooth permissions](https://developer.android.com/guide/topics/connectivity/bluetooth/permissions)
+
 ## Ionic
 
     $ npm i @awesome-cordova-plugins/bluetooth-classic-serial-port

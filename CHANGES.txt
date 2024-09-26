@@ -1,3 +1,6 @@
+= 0.9.15 =
+Android: Move Android permissions to config.xml
+
 = 0.9.14 =
 iOS: Add plugin variables
 
