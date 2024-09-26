@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
- * PhoneGap Plugin for Serial Communication over Bluetooth
+ * Cordova Plugin for Serial Communication over Bluetooth
  */
 public class BluetoothClassicSerial extends CordovaPlugin {
 

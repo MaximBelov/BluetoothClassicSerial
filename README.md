@@ -54,25 +54,30 @@ Install with Ionic
 
 Note that this plugin's id changed from 'cordova-plugin-bluetooth-serial' to 'cordova-plugin-bluetooth-classic-serial-port' as part of the fork.
 
-## Ionic Native
+## Plugin variables
 
-### Dev version
+All variables can be modified after installation by updating the values in `package.json`.
 
-    $ npm i ionic-native-bluetooth-classic-serial-port
+-   `BLUETOOTH_USAGE_DESCRIPTION`: [**iOS**] defines the values for [NSBluetoothAlwaysUsageDescription](https://developer.apple.com/documentation/bundleresources/information_property_list/nsbluetoothalwaysusagedescription?language=objc).
 
-### Prod version
+-   `IOS_INIT_ON_LOAD`: [**iOS**] Prevents the Bluetooth plugin from being initialised until first access to the `bluetoothClassicSerial` window object. This allows an application to warn the user before the Bluetooth access permission is requested.
 
-    $ npm i @ionic-native/bluetooth-classic-serial-port
+## Ionic
+
+    $ npm i @awesome-cordova-plugins/bluetooth-classic-serial-port
 
 ## iOS Notes
 
-iOS requires that the device's protocol string is in the p-list.  This plugin has a dependency on [cordova-custom-config](https://github.com/dpa99c/cordova-custom-config) which enables plist entries to be created from entries the application's cordova config.xml file.
-
-The Phonegap Build service doesn't use this plugin, and instead appears to have it's own method for passing entries into the iOS plist.  Examples below.
+iOS requires that the device's protocol string is in the p-list.  
+This plugin has a dependency on [cordova-custom-config](https://github.com/dpa99c/cordova-custom-config) which enables plist entries to be created from entries the application's cordova config.xml file.
 
 ### Examples
 
-Replace the text 'first.device.protocol.string' with the protocol string for the Bluetooth accessory you are connecting to. Create a new line for each protocol string.  Some devices may have more than one.  The plugin only allows for connection to one device and one protocol.  If you need to connect to another, disconnect, then connect to the required device and protocol.
+Replace the text 'first.device.protocol.string' with the protocol string for the Bluetooth accessory you are connecting to. 
+Create a new line for each protocol string.  
+Some devices may have more than one.  
+The plugin only allows for connection to one device and one protocol.  
+If you need to connect to another, disconnect, then connect to the required device and protocol.
 
 #### Cordova Command Line config.xml entry for Supported Accessories
 
@@ -87,16 +92,6 @@ Replace the text 'first.device.protocol.string' with the protocol string for the
 </platform>
 ```
 
-#### Phonegap Build config.xml entry for Supported Accessories
-
-```xml
-<config-file platform="ios" parent="UISupportedExternalAccessoryProtocols">
-    <array>
-        <string>first.device.protocol.string</string>
-         <string>second.device.protocol.string</string>
-    </array>
-</config-file>
-```
 
 # Examples
 
@@ -705,8 +700,6 @@ Most of the Bluetooth implementation was borrowed from the Bluetooth Chat exampl
 The API for available, read, readUntil was influenced by the [BtSerial Library for Processing for Arduino](https://github.com/arduino/BtSerial)
 
 ## Wrong Bluetooth Plugin?
-
-If you don't need **serial** over Bluetooth, try the [PhoneGap Bluetooth Plugin for Android](https://github.com/phonegap/phonegap-plugins/tree/DEPRECATED/Android/Bluetooth/2.2.0) or perhaps [phonegap-plugin-bluetooth](https://github.com/tanelih/phonegap-bluetooth-plugin).
 
 If you need generic Bluetooth Low Energy support checkout Don Colemans's [Cordova BLE Plugin](https://github.com/don/cordova-plugin-ble-central).
 

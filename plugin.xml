@@ -3,7 +3,7 @@
     xmlns="http://www.phonegap.com/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="cordova-plugin-bluetooth-classic-serial-port"
-    version="0.9.13">
+    version="0.9.14">
 
     <name>Bluetooth Classic Serial</name>
     <description>Bluetooth Serial Communication Plugin</description>
@@ -41,13 +41,22 @@
     </platform>
 
     <platform name="ios">
+        <preference name="IOS_INIT_ON_LOAD" default="false"/>
+        <preference name="BLUETOOTH_USAGE_DESCRIPTION" default="This app requires constant Bluetooth access to function properly."/>
 
         <dependency id="cordova-custom-config" />
 
         <config-file target="config.xml" parent="/widget">
             <feature name="BluetoothClassicSerial">
-                <param name="ios-package" value="BluetoothClassicSerial" onload="true"/>
+                <param name="ios-package" value="BluetoothClassicSerial" onload="$IOS_INIT_ON_LOAD"/>
             </feature>
+        </config-file>
+
+        <config-file target="*-Info.plist" parent="NSBluetoothPeripheralUsageDescription">
+            <string>$BLUETOOTH_USAGE_DESCRIPTION</string>
+        </config-file>
+        <config-file target="*-Info.plist" parent="NSBluetoothAlwaysUsageDescription">
+            <string>$BLUETOOTH_USAGE_DESCRIPTION</string>
         </config-file>
 
         <header-file src="src/ios/BluetoothClassicSerial.h" target-dir="BluetoothClassicSerial" />
