@@ -12,6 +12,16 @@
 - (void)pluginInitialize;
 
 /*!
+ @brief Used to start up the CBCentralManager and prompt the user for bluetooth permissions.
+ JavaScript API:
+ @code
+ bluetoothClassicSerial.initialize(successCallback, failCallback);
+ @endcode
+
+ */
+- (void)initialize:(CDVInvokedUrlCommand *)command;
+
+/*!
  @brief List all currently connected devices
  @discussion Will return a list - either empty or populated with all currently connected devices to the successCallback.
 

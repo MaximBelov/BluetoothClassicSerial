@@ -47,6 +47,7 @@ public class BluetoothClassicSerial extends CordovaPlugin {
     private static final String ACCESS_COARSE_LOCATION = "android.permission.ACCESS_COARSE_LOCATION"; // API 29
 
     // actions
+    private static final String INITIALIZE = "initialize";
     private static final String LIST = "list";
     private static final String CONNECT = "connect";
     private static final String CONNECT_INSECURE = "connectInsecure";
@@ -128,7 +129,10 @@ public class BluetoothClassicSerial extends CordovaPlugin {
 
         boolean validAction = true;
 
-        if (action.equals(LIST)) {
+
+        if (action.equals(INITIALIZE)) {
+            callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, true));
+        } else if (action.equals(LIST)) {
 
             listBondedDevices(callbackContext);
 
@@ -289,11 +293,21 @@ public class BluetoothClassicSerial extends CordovaPlugin {
 
             } else if (action.equals(SET_DEVICE_DISCOVERED_LISTENER)) {
 
-                this.deviceDiscoveredCallback = callbackContext;
+                if (this.deviceDiscoveredCallback == null) {
+                    this.deviceDiscoveredCallback = callbackContext;
+                } else {
+                    callbackContext.error("Device discovered callback exists");
+                }
 
             } else if (action.equals(CLEAR_DEVICE_DISCOVERED_LISTENER)) {
 
-                this.deviceDiscoveredCallback = null;
+                if (this.deviceDiscoveredCallback == null) {
+                    callbackContext.error("Device discovered callback not exists");
+                } else {
+                    this.deviceDiscoveredCallback.success(new PluginResult(PluginResult.Status.OK, true));
+                    callbackContext.success(new PluginResult(PluginResult.Status.OK, true));
+                    this.deviceDiscoveredCallback = null;
+                }
 
             } else {
                 validAction = false;

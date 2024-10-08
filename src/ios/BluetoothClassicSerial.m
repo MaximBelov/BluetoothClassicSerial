@@ -12,7 +12,7 @@
     self.bluetoothEnabled = false;
 
     // State the core bluetooth central manager
-    self.bluetoothManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil options:nil];
+    self.bluetoothManager = nil;
 
     // Initialise array to hold communication sessions
     self.communicationSessions = [[NSMutableArray alloc] init];
@@ -32,12 +32,38 @@
 
 #pragma mark - Cordova Plugin Methods
 
-- (void)clearDeviceDiscoveredListener:(CDVInvokedUrlCommand *)command {
-    self.deviceDiscoveredCallbackID = nil;
+
+- (void)initialize:(CDVInvokedUrlCommand *)command {
+    CDVPluginResult *pluginResult = nil;
+    if (self.bluetoothManager == nil) {
+        self.bluetoothManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil options:nil];
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:true];
+    } else {
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsBool:false];
+    }
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 - (void)setDeviceDiscoveredListener:(CDVInvokedUrlCommand *)command {
-    self.deviceDiscoveredCallbackID = command.callbackId;
+    if (self.deviceDiscoveredCallbackID == nil) {
+        self.deviceDiscoveredCallbackID = command.callbackId;
+    } else {
+        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Device discovered callback exists"];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    }
+}
+
+- (void)clearDeviceDiscoveredListener:(CDVInvokedUrlCommand *)command {
+    CDVPluginResult *pluginResult = nil;
+    if (self.deviceDiscoveredCallbackID == nil) {
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Device discovered callback not exists"];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    } else {
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:true];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:self.deviceDiscoveredCallbackID];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+        self.deviceDiscoveredCallbackID = nil;
+    }
 }
 
 - (void)subscribe:(CDVInvokedUrlCommand *)command {

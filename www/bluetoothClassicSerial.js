@@ -1,7 +1,9 @@
 /*global cordova*/
 module.exports = {
 
-    version: '0.9.15',
+    initialize: function(success, failure) {
+        cordova.exec(success, failure, "BluetoothClassicSerial", "initialize", []);
+    },
 
     connect: function (deviceId, interfaceArray, success, failure) {
 
