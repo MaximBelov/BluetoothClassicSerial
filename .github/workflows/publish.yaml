@@ -3,7 +3,7 @@ name: Publishing
 on:
   push:
     branches:
-      - master
+      - main
       - develop
 
 jobs:
@@ -19,7 +19,7 @@ jobs:
       - run: node -v
       - run: npm i
       - name: Release
-        if: github.ref_name == 'master'
+        if: github.ref_name == 'main'
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
