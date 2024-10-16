@@ -86,7 +86,6 @@ For the best understanding about which permissions are needed for which combinat
 ## iOS Notes
 
 iOS requires that the device's protocol string is in the p-list.  
-This plugin has a dependency on [cordova-custom-config](https://github.com/dpa99c/cordova-custom-config) which enables plist entries to be created from entries the application's cordova config.xml file.
 
 ### Examples
 

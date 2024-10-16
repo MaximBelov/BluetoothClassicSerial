@@ -35,8 +35,6 @@
         <preference name="IOS_INIT_ON_LOAD" default="false"/>
         <preference name="BLUETOOTH_USAGE_DESCRIPTION" default="This app requires constant Bluetooth access to function properly."/>
 
-        <dependency id="cordova-custom-config" />
-
         <config-file target="config.xml" parent="/widget">
             <feature name="BluetoothClassicSerial">
                 <param name="ios-package" value="BluetoothClassicSerial" onload="$IOS_INIT_ON_LOAD"/>
